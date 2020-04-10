@@ -18,3 +18,5 @@ Route::get('/', function () {
 });
 Route::get('/admin','AdminController@index')->name('admin-index');
 Route::get('/dash-board','DashboardController@index')->name('admin-home');
+Route::get('/user','UsersController@userList')->name('user-list');
+Route::get('/user-new','UsersController@userCreate')->name('user-create');

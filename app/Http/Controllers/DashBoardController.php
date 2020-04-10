@@ -8,6 +8,6 @@ class DashBoardController extends Controller
 {
     public function index($value='')
     {
-    	return view('admin.index');
+    	return view('admin.dashboard');
     }
 }
