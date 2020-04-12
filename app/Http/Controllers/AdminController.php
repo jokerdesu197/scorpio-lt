@@ -8,6 +8,6 @@ class AdminController extends Controller
 {
     public function index($value='')
     {
-    	return redirect()->route('admin-home');
+    	return redirect()->route('dash-board');
     }
 }
