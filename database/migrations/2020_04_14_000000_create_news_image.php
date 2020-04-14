@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProductTypesTable extends Migration
+class CreateNewsImageTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,14 @@ class CreateProductTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('product_types', function (Blueprint $table) {
+        Schema::create('news_image', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name')->nullable();
+            $table->foreign('news_id')->references('id')->on('news')->nullable();
+            $table->string('path', 200)->nullable();
+            $table->string('file_name', 255)->nullable();
+            $table->integer('sort_no', 11)->nullable();
             $table->foreign('creator_id')->references('id')->on('users')->nullable();
             $table->timestamps();
-            $table->datetime('deleted_at')->nullable();
         });
     }
 
@@ -29,6 +31,6 @@ class CreateProductTypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('product_types');
+        Schema::dropIfExists('news_image');
     }
 }
