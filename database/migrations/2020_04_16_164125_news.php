@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateNewsTable extends Migration
+class News extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class CreateNewsTable extends Migration
     public function up()
     {
         Schema::create('news', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id')->unsigned();
             $table->string('news_code', 10)->unique();
             $table->string('name', 255)->nullable();
             $table->string('title', 255)->nullable();
@@ -25,6 +25,7 @@ class CreateNewsTable extends Migration
             $table->string('news_type', 255)->nullable();
             $table->string('source', 255)->nullable();
             $table->string('tags', 50)->nullable();
+            $table->integer('creator_id')->unsigned();
             $table->foreign('creator_id')->references('id')->on('users')->nullable();
             $table->boolean('status')->default(0);
             $table->timestamps();

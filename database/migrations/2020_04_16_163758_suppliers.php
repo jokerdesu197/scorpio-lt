@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSuppliersTable extends Migration
+class Suppliers extends Migration
 {
     /**
      * Run the migrations.
@@ -16,7 +16,6 @@ class CreateSuppliersTable extends Migration
         Schema::create('suppliers', function (Blueprint $table) {
             $table->increments('id');
             $table->string('supplier_name', 50)->nullable();
-            $table->foreign('product_id')->references('id')->on('products')->nullable();
             $table->string('address', 50)->nullable();
             $table->string('email', 128)->nullable();
             $table->string('fax', 18)->nullable();

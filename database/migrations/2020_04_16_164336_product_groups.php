@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLogsTable extends Migration
+class ProductGroups extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,14 @@ class CreateLogsTable extends Migration
      */
     public function up()
     {
-        Schema::create('logs', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('description', 200)->nullable();
+        Schema::create('product_groups', function (Blueprint $table) {
+            $table->increments('id')->unsigned();
+            $table->string('name', 255)->nullable();
+            $table->string('descripton', 500)->nullable();
+            $table->integer('creator_id')->unsigned();
             $table->foreign('creator_id')->references('id')->on('users')->nullable();
-            $table->boolean('status')->default(0);
             $table->timestamps();
+            $table->datetime('deleted_at')->nullable();
         });
     }
 
@@ -29,6 +31,6 @@ class CreateLogsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('logs');
+        Schema::dropIfExists('product_groups');
     }
 }

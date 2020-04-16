@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCustomersTable extends Migration
+class Customers extends Migration
 {
     /**
      * Run the migrations.
@@ -23,7 +23,9 @@ class CreateCustomersTable extends Migration
             $table->tinyInteger('sex')->nullable();
             $table->string('address', 50)->nullable();
             $table->string('password', 18)->bcryt();
+            $table->integer('role_id')->unsigned();
             $table->foreign('role_id')->references('id')->on('roles');
+            $table->integer('creator_id')->unsigned();
             $table->foreign('creator_id')->references('id')->on('users')->nullable();
             $table->datetime('login_date')->nullable();
             $table->boolean('status')->default(0);

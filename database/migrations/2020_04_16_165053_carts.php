@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCartsTable extends Migration
+class Carts extends Migration
 {
     /**
      * Run the migrations.
@@ -16,9 +16,11 @@ class CreateCartsTable extends Migration
         Schema::create('carts', function (Blueprint $table) {
             $table->increments('id');
             $table->string('product_code', 10)->nullable();
+            $table->integer('product_id')->unsigned();
             $table->foreign('product_id')->references('id')->on('products')->nullable();
+            $table->integer('customer_id')->unsigned();
             $table->foreign('customer_id')->references('id')->on('customers')->nullable();
-            $table->integer('quantity', 11)->nullable();
+            $table->integer('quantity')->nullable();
             $table->boolean('is_item_cancel')->default(1);
             $table->timestamps();
         });
