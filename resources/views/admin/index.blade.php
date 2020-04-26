@@ -51,9 +51,9 @@
                   </li>
                   <li><a><i class="fa fa-edit"></i> Users <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="form_advanced.html">Create user</a></li>
+                      <li><a href="{{ route('user-create')}}">Create user</a></li>
                       <li><a href="{{ route('user-list') }}">List user</a></li>
-                      <li><a href="form_validation.html">Create Role</a></li>
+                      <li><a href="#">Create Role</a></li>
                       <li><a href="form_wizards.html">List Role</a></li>
                       <li><a href="form_upload.html">Permision New</a></li>
                       <li><a href="form_buttons.html">Permision list</a></li>

@@ -43,14 +43,14 @@
                     </div>
                     <div class="x_content">
                         <p class="text-muted font-13 m-b-30"></p>
-                        <form class="form-horizontal form-label-left" method="post" action="{{ route('post-user-create')}}" >
+                        <form class="form-horizontal form-label-left" method="post" action="{{ route('post-user-create', $user->id )}}" >
                             <input type="hidden" name="_token" value="{{csrf_token()}}"/>
                             <span class="section" >Create User</span>
 
                             <div class="item form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Name<span>*</span></label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="text" name="name" class="form-control col-md-7 col-xs-12" value="{{ old('name') }}">
+                                    <input type="text" name="name" class="form-control col-md-7 col-xs-12" value="{{ $user->name}}">
                                 </div>
                                 @if($errors->has('name'))
                                     <p style="color: red"> {{$errors->first('name')}}</p>
@@ -59,7 +59,7 @@
                             <div class="item form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Login ID<span>*</span></label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="text" name="login_id" class="form-control col-md-7 col-xs-12" value="{{ old('login_id') }}">
+                                    <input type="text" name="login_id" class="form-control col-md-7 col-xs-12" value="{{ $user->login_id}}">
                                 </div>
                                 @if($errors->has('login_id'))
                                     <p style="color: red"> {{$errors->first('login_id')}}</p>
@@ -68,7 +68,7 @@
                             <div class="item form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Phone number<span>*</span></label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="number" name="tel_num" class="form-control col-md-7 col-xs-12" value="{{ old('tel_num') }}">
+                                    <input type="number" name="tel_num" class="form-control col-md-7 col-xs-12" value="{{ $user->tel_num}}">
                                 </div>
                                 @if($errors->has('tel_num'))
                                     <p style="color: red"> {{$errors->first('tel_num')}}</p>
@@ -77,7 +77,7 @@
                             <div class="item form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Email<span>*</span></label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="mail" name="email" class="form-control col-md-7 col-xs-12" value="{{ old('email') }}">
+                                    <input type="mail" name="email" class="form-control col-md-7 col-xs-12" value="{{ $user->email}}">
                                 </div>
                                 @if($errors->has('email'))
                                     <p style="color: red"> {{$errors->first('email')}}</p>
@@ -86,7 +86,7 @@
                             <div class="item form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Fax<span></span></label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="mail" name="fax" class="form-control col-md-7 col-xs-12" value="{{ old('fax') }}">
+                                    <input type="mail" name="fax" class="form-control col-md-7 col-xs-12" value="{{ $user->fax}}">
                                 </div>
                                 @if($errors->has('fax'))
                                     <p style="color: red"> {{$errors->first('fax')}}</p>
@@ -95,7 +95,7 @@
                             <div class="item form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Birth<span>*</span></label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="date" name="birth" class="form-control col-md-7 col-xs-12" value="{{ old('birth') }}">
+                                    <input type="date" name="birth" class="form-control col-md-7 col-xs-12" value="{{ date('Y-m-d', strtotime($user->birth))}}">
                                 </div>
                                 @if($errors->has('birth'))
                                     <p style="color: red"> {{$errors->first('birth')}}</p>
@@ -106,19 +106,19 @@
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <label class="control-label col-md-2 col-sm-31">Male:<span></span>
                                         <div class="iradio_flat-green" style="position: relative;">
-                                            <input type="radio" class="flat" name="sex" id="genderM" value="0" checked="" required="" data-parsley-multiple="gender" style="position: absolute; opacity: 0;">
+                                            <input type="radio" class="flat" name="sex" id="genderM" value="0"  required="" data-parsley-multiple="gender" style="position: absolute; opacity: 0;" {{ $user->sex == "0" ? 'checked' : null }} }}>
                                             <ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
                                         </div>
                                     </label>
                                     <label class="control-label col-md-3 col-sm-31"> Female:<span></span>
                                         <div class="iradio_flat-green" style="position: relative;">
-                                            <input type="radio" class="flat" name="sex" id="genderF" value="1" data-parsley-multiple="gender" style="position: absolute; opacity: 0;">
+                                            <input type="radio" class="flat" name="sex" id="genderF" value="1" data-parsley-multiple="gender" style="position: absolute; opacity: 0;" {{ $user->sex == "1" ? 'checked' : null }} }}>
                                             <ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
                                         </div>
                                     </label>
                                     <label class="control-label col-md-2 col-sm-31">Other:<span></span>
                                         <div class="iradio_flat-green" style="position: relative;">
-                                            <input type="radio" class="flat" name="sex" id="genderO" value="2" data-parsley-multiple="gender" style="position: absolute; opacity: 0;">
+                                            <input type="radio" class="flat" name="sex" id="genderO" value="2" data-parsley-multiple="gender" style="position: absolute; opacity: 0;" {{ $user->sex == "2" ? 'checked' : null }} }}>
                                             <ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
                                         </div>
                                     </label>
@@ -130,7 +130,7 @@
                             <div class="item form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Address<span>*</span></label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="text" name="address" class="form-control col-md-7 col-xs-12" value="{{ old('address') }}">
+                                    <input type="text" name="address" class="form-control col-md-7 col-xs-12" value="{{ $user->address}}">
                                 </div>
                                 @if($errors->has('address'))
                                     <p style="color: red"> {{$errors->first('address')}}</p>
@@ -139,7 +139,7 @@
                             <div class="item form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Password<span>*</span></label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="password" name="password" class="form-control col-md-7 col-xs-12" placeholder="Nhập password...">
+                                    <input type="password" name="password" class="form-control col-md-7 col-xs-12" placeholder="Nhập password..." value="{{ $user->password}}">
                                 </div>
                                 @if($errors->has('password'))
                                     <p style="color: red"> {{$errors->first('password')}}</p>
@@ -148,7 +148,7 @@
                             <div class="item form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Password confirm<span>*</span></label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="password" name="password_confirmation" class="form-control col-md-7 col-xs-12" placeholder="Nhập lại  password...">
+                                    <input type="password" name="password_confirmation" class="form-control col-md-7 col-xs-12" placeholder="Nhập lại  password..." value="{{ $user->password}}">
                                 </div>
                                 @if($errors->has('password_confirmation'))
                                     <p style="color: red"> {{$errors->first('password_confirmation')}}</p>
@@ -160,9 +160,9 @@
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <select name="role_id" class="form-control col-md-7 col-xs-12">
                                         <option value="">-- Chọn role --</option>
-                                        <option value="0">Admin</option>
-                                        <option value="1">Mod</option>
-                                        <option value="3">Member</option>
+                                        <option value="0" {{ $user->role_id == "1" ? 'selected' : null }} }}>Admin</option>
+                                        <option value="1" {{ $user->role_id == "2" ? 'selected' : null }} }} >Mod</option>
+                                        <option value="3" {{ $user->role_id == "3" ? 'selected' : null }} }} >Member</option>
                                      </select>
                                 </div>
                                 @if($errors->has('role_id'))
@@ -175,8 +175,8 @@
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <select name="status" class="form-control col-md-7 col-xs-12">
                                         <option value="">-- Chọn status --</option>
-                                        <option value="1">Kích hoạt</option>
-                                        <option value="0">Chưa kích hoạt</option>
+                                        <option value="1" {{ $user->status == "1" ? 'selected' : null }} }}>Kích hoạt</option>
+                                        <option value="0" {{ $user->status == "0" ? 'selected' : null }}>Chưa kích hoạt</option>
                                     </select>
                                 </div>
                                 @if($errors->has('status'))

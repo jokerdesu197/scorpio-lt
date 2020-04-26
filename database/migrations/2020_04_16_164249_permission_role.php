@@ -15,7 +15,6 @@ class PermissionRole extends Migration
     {
         Schema::create('permission_role', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name', 50);
             $table->integer('role_id')->unsigned();
             $table->foreign('role_id')->references('id')->on('roles')->nullable();
             $table->integer('permission_id')->unsigned();
