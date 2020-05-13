@@ -160,8 +160,8 @@
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <select name="role_id" class="form-control col-md-7 col-xs-12">
                                         <option value="">-- Chọn role --</option>
-                                        <option value="0">Admin</option>
-                                        <option value="1">Mod</option>
+                                        <option value="1">Admin</option>
+                                        <option value="2">Mod</option>
                                         <option value="3">Member</option>
                                      </select>
                                 </div>

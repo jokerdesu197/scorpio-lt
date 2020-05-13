@@ -6,6 +6,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <meta name="csrf-token" content="{{ csrf_token() }}"> -->
 	<link rel="icon" href="images/favicon.ico" type="image/ico" />
 
     <title>Scorpio LT Pharmacy</title>
@@ -62,11 +63,13 @@
                   <li><a><i class="fa fa-desktop"></i> Products <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="{{ route('product-create')}}">Create product</a></li>
-                      <li><a href="general_elements.html">List product</a></li>
-                      <li><a href="typography.html">Create product type</a></li>
-                      <li><a href="icons.html">List product tpe</a></li>
-                      <li><a href="glyphicons.html">Create product group</a></li>
-                      <li><a href="widgets.html">List product group</a></li>
+                      <li><a href="{{ route('product-list')}}">List product</a></li>
+                      <hr>
+                      <li><a href="{{ route('product-type-create')}}">Create product type</a></li>
+                      <li><a href="{{ route('product-type-list')}}">List product type</a></li>
+                      <hr>
+                      <li><a href="{{ route('product-gr-create')}}">Create product group</a></li>
+                      <li><a href="{{ route('product-gr-list')}}">List product group</a></li>
                     </ul>
                   </li>
                   <li><a><i class="fa fa-table"></i> Tables <span class="fa fa-chevron-down"></span></a>

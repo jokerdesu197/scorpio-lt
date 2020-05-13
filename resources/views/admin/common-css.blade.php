@@ -1,3 +1,6 @@
+<!-- Custom css Scorpio -->
+<link href="{{ asset('css/custom-scorpio.css?20200510') }}" rel="stylesheet">
+
 <link href="{{ asset('vendors/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
 <!-- Font Awesome -->
 <link href="{{ asset('vendors/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
@@ -15,3 +18,6 @@
 
 <!-- Custom Theme Style -->
 <link href="{{ asset('build/css/custom.min.css') }}" rel="stylesheet">
+<!-- Uploadfile -->
+<link href="{{ asset('css/jquery.fileupload.css') }}" rel="stylesheet">
+<link href="{{ asset('css/jquery.fileupload-ui.css') }}" rel="stylesheet">

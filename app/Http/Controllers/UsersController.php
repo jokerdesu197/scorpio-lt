@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\UsersRequest;
 use Auth;
-use DB;
 use Carbon\Carbon;
+use DB;
 
 class UsersController extends Controller
 {
@@ -33,7 +33,7 @@ class UsersController extends Controller
     public function postUserCreate(UsersRequest $request, $id=null)
     {
     	$logs = '';
-		$id = $request->get('id');
+		$id = $request->id;
         $name = $request->input('name');
 	    $login_id = $request->input('login_id');
 	    $tel_num = $request->input('tel_num');
@@ -113,10 +113,10 @@ class UsersController extends Controller
 		    	// 'creator_id' => Auth::user()->id,
 		    	'status' => $logs_status
 		    ]);
-		    return redirect()->back();
+		    return redirect()->route('user-list');
     	}
     }
-    public function postUserDelete($id)
+    public function userDelete($id)
     {
     	DB::beginTransaction();
     		try {

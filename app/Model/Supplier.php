@@ -4,15 +4,15 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Product extends Model
+class Supplier extends Model
 {
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $table = 'products';
+    protected $table = 'suppliers';
     protected $fillable = [
-        'name', 'group_id', 'search_word', 'title', 'description', 'unit', 'brand', 'status', 'del_flg'
+        'supplier_name', 'address', 'email', 'fax', 'tel_num', 'status'
     ];
 }
