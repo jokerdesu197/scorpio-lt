@@ -26,12 +26,12 @@ class Users extends Migration
             $table->string('password', 18)->bcryt();
             $table->integer('role_id')->unsigned();
             $table->foreign('role_id')->references('id')->on('roles');
-            $table->integer('creator_id')->unsigned();
-            $table->foreign('creator_id')->references('id')->on('users')->nullable();
+            $table->integer('creator_id')->unsigned()->nullable();
+            $table->foreign('creator_id')->references('id')->on('users');
             $table->datetime('login_date')->nullable();
             $table->boolean('status')->default(0);
             $table->rememberToken()->nullable();
-            $table->timestamps();
+            $table->timestamps()->default('CURRENT_TIMESTAMP');
             $table->datetime('deleted_at')->nullable();
         });
     }

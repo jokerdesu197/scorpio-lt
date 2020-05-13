@@ -25,10 +25,10 @@ class News extends Migration
             $table->string('news_type', 255)->nullable();
             $table->string('source', 255)->nullable();
             $table->string('tags', 50)->nullable();
-            $table->integer('creator_id')->unsigned();
-            $table->foreign('creator_id')->references('id')->on('users')->nullable();
+            $table->integer('creator_id')->unsigned()->nullable(;
+            $table->foreign('creator_id')->references('id')->on('users'));
             $table->boolean('status')->default(0);
-            $table->timestamps();
+            $table->timestamps()->default('CURRENT_TIMESTAMP');
             $table->datetime('deleted_at')->nullable();
         });
     }
