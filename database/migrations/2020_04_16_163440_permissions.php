@@ -18,7 +18,7 @@ class Permissions extends Migration
             $table->string('name', 50)->unique();
             $table->string('group', 50)->nullable();
             $table->string('description')->nullable();
-            $table->timestamps();
+            $table->timestamps()->default('CURRENT_TIMESTAMP');
         });
     }
 

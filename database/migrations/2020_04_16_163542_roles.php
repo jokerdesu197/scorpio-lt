@@ -17,7 +17,7 @@ class Roles extends Migration
             $table->increments('id')->unsigned();
             $table->string('name', 50);
             $table->string('description', 18)->nullable();
-            $table->timestamps();
+            $table->timestamps()->default('CURRENT_TIMESTAMP');
             $table->datetime('deleted_at')->nullable();
         });
     }

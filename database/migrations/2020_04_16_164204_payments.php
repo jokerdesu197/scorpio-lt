@@ -15,12 +15,12 @@ class Payments extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('creator_id')->unsigned();
-            $table->foreign('creator_id')->references('id')->on('users')->nullable();
+            $table->integer('creator_id')->unsigned()->nullable();
+            $table->foreign('creator_id')->references('id')->on('users');
             $table->string('product_name', 50)->unique();
             $table->integer('sort_no')->nullable();
             $table->datetime('deleted_at')->nullable();
-            $table->timestamps();
+            $table->timestamps()->default('CURRENT_TIMESTAMP');
         });
     }
 

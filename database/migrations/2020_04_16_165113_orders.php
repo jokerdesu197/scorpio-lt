@@ -16,12 +16,12 @@ class Orders extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->string('order_code', 10)->nullable();
-            $table->integer('customer_id')->unsigned();
-            $table->foreign('customer_id')->references('id')->on('customers')->nullable();
-            $table->integer('product_id')->unsigned();
-            $table->foreign('product_id')->references('id')->on('products')->nullable();
-            $table->integer('payment_id')->unsigned();
-            $table->foreign('payment_id')->references('id')->on('payments')->nullable();
+            $table->integer('customer_id')->unsigned()->nullable();
+            $table->foreign('customer_id')->references('id')->on('customers');
+            $table->integer('product_id')->unsigned()->nullable();
+            $table->foreign('product_id')->references('id')->on('products');
+            $table->integer('payment_id')->unsigned()->nullable(;
+            $table->foreign('payment_id')->references('id')->on('payments'));
             $table->integer('total_price')->nullable();
             $table->string('tel_num', 18)->nullable();
             $table->string('email', 18)->nullable();

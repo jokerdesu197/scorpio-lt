@@ -18,9 +18,9 @@ class Banners extends Migration
             $table->string('path', 200)->nullable();
             $table->string('file_name', 255)->nullable();
             $table->integer('sort_no')->nullable();
-            $table->integer('creator_id')->unsigned();
-            $table->foreign('creator_id')->references('id')->on('users')->nullable();
-            $table->timestamps();
+            $table->integer('creator_id')->unsigned()->nullable();
+            $table->foreign('creator_id')->references('id')->on('users');
+            $table->timestamps()->default('CURRENT_TIMESTAMP');
         });
     }
 

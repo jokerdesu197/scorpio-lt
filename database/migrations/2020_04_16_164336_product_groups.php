@@ -16,10 +16,10 @@ class ProductGroups extends Migration
         Schema::create('product_groups', function (Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->string('name', 255)->nullable();
-            $table->string('descripton', 500)->nullable();
-            $table->integer('creator_id')->unsigned();
-            $table->foreign('creator_id')->references('id')->on('users')->nullable();
-            $table->timestamps();
+            $table->string('description', 500)->nullable();
+            $table->integer('creator_id')->unsigned()->nullable();
+            $table->foreign('creator_id')->references('id')->on('users');
+            $table->timestamps()->default('CURRENT_TIMESTAMP');
             $table->datetime('deleted_at')->nullable();
         });
     }
