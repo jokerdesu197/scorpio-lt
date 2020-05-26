@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('/news', 'NewsController@news')->name('news-index');
+Route::get('/', 'PageController@pageIndex')->name('f-index');
+Route::get('/news', 'NewsController@news')->name('f-news-index');
+Route::get('/products', 'PageController@productList')->name('f-product-list');
+Route::get('/products/detail/{id}', 'PageController@productDetail')->name('f-product-detail');
