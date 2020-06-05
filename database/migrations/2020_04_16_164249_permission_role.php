@@ -17,8 +17,7 @@ class PermissionRole extends Migration
             $table->increments('id');
             $table->integer('role_id')->unsigned()->nullable();
             $table->foreign('role_id')->references('id')->on('roles');
-            $table->integer('permission_id')->unsigned()->nullable();
-            $table->foreign('permission_id')->references('id')->on('permissions');
+            $table->string('permission_id', 255)->index()->nullable();
             $table->timestamps()->default('CURRENT_TIMESTAMP');
             $table->datetime('deleted_at')->nullable();
         });

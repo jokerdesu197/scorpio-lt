@@ -23,7 +23,7 @@ class Users extends Migration
             $table->datetime('birth')->nullable();
             $table->tinyInteger('sex')->nullable();
             $table->string('address', 50)->nullable();
-            $table->string('password', 18)->bcryt();
+            $table->string('password', 255)->bcryt();
             $table->integer('role_id')->unsigned();
             $table->foreign('role_id')->references('id')->on('roles');
             $table->integer('creator_id')->unsigned()->nullable();
