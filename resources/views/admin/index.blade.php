@@ -7,9 +7,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- <meta name="csrf-token" content="{{ csrf_token() }}"> -->
-	<link rel="icon" href="images/favicon.ico" type="image/ico" />
+	<link rel="icon" href="{{ asset('images/favicon.ico')}}" type="image/ico" />
 
-    <title>Scorpio LT Pharmacy</title>
+    <title>Scorpio Pharmacy</title>
   @include('admin.common-css')
   </head>
 
@@ -18,8 +18,10 @@
       <div class="main_container">
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
-            <div class="navbar nav_title" style="border: 0;">
-              <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>Gentelella Alela!</span></a>
+            <div class="navbar nav_title" style="border: 2px solid #2a3f54; background-color:#ededed">
+              <a href="index.html" class="site_title" style="margin-top: -10px">
+                <img src="{{ asset('images/Newlogo3.png')}}" width="65%">
+              </a>
             </div>
 
             <div class="clearfix"></div>
@@ -27,11 +29,11 @@
             <!-- menu profile quick info -->
             <div class="profile clearfix">
               <div class="profile_pic">
-                <img src="images/img.jpg" alt="..." class="img-circle profile_img">
+                <img src="{{ asset('images/user.png')}}" alt="..." class="img-circle profile_img">
               </div>
               <div class="profile_info">
                 <span>Welcome,</span>
-                <h2>John Doe</h2>
+                <h2>{{ Auth::user()->name }}</h2>
               </div>
             </div>
             <!-- /menu profile quick info -->
@@ -50,26 +52,30 @@
                       <li><a href="index3.html">Dashboard3</a></li> -->
                     </ul>
                   </li>
-                  <li><a><i class="fa fa-edit"></i> Users <span class="fa fa-chevron-down"></span></a>
+                  <li><a><i class="fa fa-edit"></i>Access Control List<span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="{{ route('user-create')}}">Create user</a></li>
-                      <li><a href="{{ route('user-list') }}">List user</a></li>
-                      <li><a href="#">Create Role</a></li>
-                      <li><a href="form_wizards.html">List Role</a></li>
-                      <li><a href="form_upload.html">Permision New</a></li>
-                      <li><a href="form_buttons.html">Permision list</a></li>
+                      <li><a href="{{ route('user-create')}}">Create User</a></li>
+                      <li><a href="{{ route('user-list') }}">List User</a></li>
+                      <hr>
+                      <li><a href="{{ route('role-create')}}">Create Role</a></li>
+                      <li><a href="{{ route('role-list')}}">List Role</a></li>
+                      <!-- <hr> -->
+                      <!-- <li><a href="form_upload.html">Permision New</a></li>
+                      <li><a href="form_buttons.html">Permision List</a></li> -->
+                      <!-- <hr> -->
+                      <li><a href="{{ route('ACL-create')}}">ACL Create</a></li>
                     </ul>
                   </li>
                   <li><a><i class="fa fa-desktop"></i> Products <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="{{ route('product-create')}}">Create product</a></li>
-                      <li><a href="{{ route('product-list')}}">List product</a></li>
+                      <li><a href="{{ route('product-create')}}">Create Product</a></li>
+                      <li><a href="{{ route('product-list')}}">List Product</a></li>
                       <hr>
-                      <li><a href="{{ route('product-type-create')}}">Create product type</a></li>
-                      <li><a href="{{ route('product-type-list')}}">List product type</a></li>
+                      <li><a href="{{ route('product-type-create')}}">Create Product Type</a></li>
+                      <li><a href="{{ route('product-type-list')}}">List Product Type</a></li>
                       <hr>
-                      <li><a href="{{ route('product-gr-create')}}">Create product group</a></li>
-                      <li><a href="{{ route('product-gr-list')}}">List product group</a></li>
+                      <li><a href="{{ route('product-gr-create')}}">Create Product Group</a></li>
+                      <li><a href="{{ route('product-gr-list')}}">List Product Group</a></li>
                     </ul>
                   </li>
                   <li><a><i class="fa fa-table"></i> Tables <span class="fa fa-chevron-down"></span></a>
@@ -171,7 +177,7 @@
         <!-- footer content -->
         <footer>
           <div class="pull-right">
-            Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+            <p>Copyright © 2020 Scorpio Pharmacy. Website designed by J</p>
           </div>
           <div class="clearfix"></div>
         </footer>

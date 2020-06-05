@@ -1,23 +1,13 @@
 @extends('admin.index')
 @section('content')
+
+@if($update_status) 
+    <script type="text/javascript">
+        alert('Pls!! update info');
+    </script>
+@endif  
 <div class="right_col" role="main">
     <div class="">
-        <div class="page-title">
-            <div class="title_left">
-                <h3>Form Elements</h3>
-            </div>
-
-            <div class="title_right">
-                <div class="col-md-5 col-sm-5  form-group pull-right top_search">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search for...">
-                        <span class="input-group-btn">
-                      <button class="btn btn-default" type="button">Go!</button>
-                    </span>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="clearfix"></div>
         <div class="row">
             <div class="col-md-12 col-sm-12 ">
@@ -136,7 +126,7 @@
                                     <p style="color: red"> {{$errors->first('address')}}</p>
                                 @endif
                             </div>
-                            <div class="item form-group">
+                            {{--<div class="item form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Password<span>*</span></label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <input type="password" name="password" class="form-control col-md-7 col-xs-12" placeholder="Nhập password..." value="{{ $user->password}}">
@@ -153,20 +143,27 @@
                                 @if($errors->has('password_confirmation'))
                                     <p style="color: red"> {{$errors->first('password_confirmation')}}</p>
                                 @endif
-                            </div>
+                            </div>--}}
                             <div class="item form-group" >
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Roles</label>
                                 <!-- <input class="form-control" name="roles" placeholder="Nhập roles..." /> -->
+                                @if(Gate::allows('user-update', null))
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <select name="role_id" class="form-control col-md-7 col-xs-12">
                                         <option value="">-- Chọn role --</option>
-                                        <option value="0" {{ $user->role_id == "1" ? 'selected' : null }} }}>Admin</option>
-                                        <option value="1" {{ $user->role_id == "2" ? 'selected' : null }} }} >Mod</option>
-                                        <option value="3" {{ $user->role_id == "3" ? 'selected' : null }} }} >Member</option>
+                                        @foreach($roles as $role)
+                                        <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                        @endforeach
                                      </select>
                                 </div>
                                 @if($errors->has('role_id'))
                                     <p style="color: red"> {{$errors->first('role_id')}}</p>
+                                @endif
+                                @else
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input type="hidden" name="role_id"  value="{{ $user->role_id }}">
+                                    <label class="col-md-7 col-xs-12"><b>{{ $user->role->name }}</b></label>
+                                </div>
                                 @endif
                             </div>
                             <div class="item form-group">
@@ -175,7 +172,7 @@
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <select name="status" class="form-control col-md-7 col-xs-12">
                                         <option value="">-- Chọn status --</option>
-                                        <option value="1" {{ $user->status == "1" ? 'selected' : null }} }}>Kích hoạt</option>
+                                        <option value="1" {{ $user->status == "1" ? 'selected' : null }}>Kích hoạt</option>
                                         <option value="0" {{ $user->status == "0" ? 'selected' : null }}>Chưa kích hoạt</option>
                                     </select>
                                 </div>

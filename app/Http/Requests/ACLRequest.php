@@ -24,15 +24,8 @@ class ACLRequest extends FormRequest
     public function rules()
     {
         $rules = [
-        	'product_code' => 'required|max:10',
-            'product_id' => 'required',
-            'product_group_id' => 'required',
-            // 'creator_id' => 'required',
-            'product_type_id' => 'required',
-            'stock' => 'required|min:1|max:11|integer',
-            'sale_limit' => 'required|min:1|max:11|integer',
-            'price' => 'required|min:1|max:11|integer',
-            'delivery_date' => 'required',
+            'description' => 'required|max:18',
+            'permission_id' => 'required',
         ];
         return $rules;
     }

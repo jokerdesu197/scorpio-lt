@@ -2,22 +2,6 @@
 @section('content')
 <div class="right_col" role="main">
     <div class="">
-        <div class="page-title">
-            <div class="title_left">
-                <h3>Form Elements</h3>
-            </div>
-
-            <div class="title_right">
-                <div class="col-md-5 col-sm-5  form-group pull-right top_search">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search for...">
-                        <span class="input-group-btn">
-                      <button class="btn btn-default" type="button">Go!</button>
-                    </span>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="clearfix"></div>
         <div class="row">
             <div class="col-md-12 col-sm-12 ">
@@ -68,7 +52,7 @@
                                             <td>{{$product->name}}</td>
 			                           		<td>{{$product->title}}</td>
 			                           		<td>{{$product->brand}}</td>
-			                           		<td>{{$product->supplier_name}}</td>
+			                           		<td>{{$product->supplier->supplier_name}}</td>
 			                           		<td>{{$product->status == 1 ? 'Active':'Un-Active'}}</td>
 			                           		<td>
 			                             		<a href="{{route('product-update',$product->id )}}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Update </a>

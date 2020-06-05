@@ -32,8 +32,8 @@ class UsersRequest extends FormRequest
             'birth'=>'required',
             'sex'=>'required',
             'address'=>'required',
-            'password'=>'required|min:6|max:18|required_with:password_confirmation|same:password_confirmation',
-            'password_confirmation' => 'min:6|max:18',
+            //'password'=>'required|min:6|max:18|required_with:password_confirmation|same:password_confirmation',
+            //'password_confirmation' => 'min:6|max:18',
             'role_id' => 'required',
             'status' => 'required',
         ];

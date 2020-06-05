@@ -35,7 +35,11 @@ class CommonController extends Controller
 			$str = substr(str_shuffle($chars), 0, $length);
             $str_code = $rand_attr.'-'.$str;
 		}
-        $check_code = DB::table('products')->where('product_code', $str_code)->count();
+        if ($rand_attr == 'P') {
+            $check_code = DB::table('products')->where('product_code', $str_code)->where('deleted_at', NULL)->count();
+        }else{
+            $check_code = DB::table('product_classes')->where('class_code', $str_code)->where('deleted_at', NULL)->count();
+        }
         if ($check_code) {
             rand_code();
         }

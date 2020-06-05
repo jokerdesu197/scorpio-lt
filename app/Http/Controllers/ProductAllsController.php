@@ -9,52 +9,71 @@ use Carbon\Carbon;
 use DB;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\CommonController;
+use App\Model\Products;
 
 class ProductAllsController extends Controller
 {
 	public function __construct(CommonController $commonController){
 		$this->commonController = $commonController;
+		$this->middleware('auth');
 	}
 	//Product Classes
-	public function productClassList($value='')
+	public function productClassList(Request $request)
 	{
-		return true;
+		if (!$request->get('page')== 1) {
+            $i = 1;
+        }else{
+            $i = ($request->get('page')-1)+1;
+        }
+        $query = DB::table('product_classes as pc')->where('pc.deleted_at', NULL)
+					->join('products as p', 'p.id', 'pc.product_id')
+					->join('product_groups as pg', 'pg.id', 'pc.product_group_id')
+					->join('product_types as pt', 'pt.id', 'pc.product_type_id');
+        $product_classes =	$query->select(['pc.id','pc.class_code', 'p.name as product', 'pg.name as group', 'pt.name as type', 'pc.price02', 'pc.sale_limit'])->paginate(5);
+        						
+		return view('admin.product.product-class-list', compact('i', 'product_classes'));
 	}
     public function productClassCreate($id=null)
     {
+    	$products = DB::table('products')->where('deleted_at', null)->get();
+    	$product_types = DB::table('product_types')->where('deleted_at', null)->get();
     	if ($id) {
     		$product_class = DB::table('product_classes')->where('id', $id)->first();
-    		return view('admin.product.product-class-update', compact('product_class'));
+    		return view('admin.product.product-class-update', compact('products', 'product_types', 'product_class'));
     	}else{
-    		return view('admin.product.product-class-create');
+    		$product_types = DB::table('product_types')->where('deleted_at', null)->get();
+    		return view('admin.product.product-class-create', compact('products', 'product_types', 'product_types'));
     	}
     }
     public function postProductClassCreate(ProductClassRequest $request, $id=null)
     {
     	$logs = '';
-		$id = $request->get('id');
-	    $product_code = $request->input('product_code');
+	    $rand_attr = 'PC';
 	    $product_id = $request->input('product_id');
-	    $product_group_id = $request->input('product_group_id');
+	    $product_group_id = Product::getProductGroup($product_id);
 	    $product_type_id = $request->input('product_type_id');
 	    $stock = $request->input('stock');
 	    $sale_limit = $request->input('sale_limit');
-	    $price = $request->input('price');
+	    $price01 = $request->input('price01');
+	    $price02 = $request->input('price02');
 	    $delivery_date = $request->input('delivery_date');
 	    // $creator_id = $request->input('creator_id');
     	if (empty($id)) {
     		DB::beginTransaction();
     		try {
 		        DB::table('product_classes')->insert([
-		            'product_code' => $product_code,
+		            'class_code' => $this->commonController->rand_code(4, $rand_attr),
 				    'product_id' => $product_id,
 				    'product_group_id' => $product_group_id,
 				    'product_type_id' => $product_type_id,
 				    'stock' => $stock,
 				    'sale_limit' => $sale_limit,
-				    'price' => $price,
+				    'price01' => $price01,
+				    'price02' => $price02,
 				    'delivery_date' => $delivery_date,
 				    // 'creator_id' => $creator_id
+				    'created_at' => Carbon::now(),
+				    'updated_at' => Carbon::now()
 			    ]);
 			    DB::commit();
     			$logs = 'Insert Product Class';
@@ -71,15 +90,17 @@ class ProductAllsController extends Controller
     		DB::beginTransaction();
     		try {
 			    DB::table('product_classes')->insert([
-		            'product_code' => $product_code,
+		            'class_code' => $this->commonController->rand_code(4, $rand_attr),
 				    'product_id' => $product_id,
 				    'product_group_id' => $product_group_id,
 				    'product_type_id' => $product_type_id,
 				    'stock' => $stock,
 				    'sale_limit' => $sale_limit,
-				    'price' => $price,
+				    'price01' => $price01,
+				    'price02' => $price02,
 				    'delivery_date' => $delivery_date,
 				    // 'creator_id' => $creator_id
+				    'updated_at' => Carbon::now()
 			    ]);
 			    DB::commit();
     			$logs = 'Update Product Class';

@@ -7,12 +7,19 @@ use App\Http\Requests\ProductsRequest;
 use Auth;
 use Carbon\Carbon;
 use DB;
+use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\CommonController;
 use SCORPIO_Const;
+use App\Repositories\Product\ProductRepositoryInterface;
 
-class ProductsController extends Controller
+class ProductController extends Controller
 {
-	public function __construct(CommonController $commonController){
+	public function __construct(
+		ProductRepositoryInterface $productRepository, 
+		CommonController $commonController
+	){
+		$this->middleware('auth');
+		$this->productRepository = $productRepository;
 		$this->commonController = $commonController;
 	}
 
@@ -23,33 +30,32 @@ class ProductsController extends Controller
         }else{
             $i = ($request->get('page')-1)+1;
         }
-        $db = DB::table('products', 'p')->where('p.deleted_at', NULL);
-        $db->join('suppliers as sup', 'p.supplier_id', 'sup.id');
-		$products = $db->select(['p.id','p.product_code', 'p.name', 'p.status', 'p.title', 'p.brand', 'sup.supplier_name'])->paginate(20);
+		$products = $this->productRepository->getListProduct()->orderBy('updated_at', 'DESC')->paginate(5);
+
 		return view('admin.product.product-list', compact('i', 'products'));
 	}
-    public function productCreate($id=null)
+    public function productCreate($id = null)
     {
     	
     	$product_groups = DB::table('product_groups')->get();
     	$suppliers = DB::table('suppliers')->get();
     	if ($id) {
-    		$product = DB::table('products')->where('id', $id)->first();
+    		$product = $this->productRepository->getProduct($id);
     		$product_images = DB::table('product_images')->where('product_id', $id)->get();
     		return view('admin.product.product-update', compact('product', 'product_images', 'product_groups', 'suppliers'));
     	}else{
     		return view('admin.product.product-create', compact('product_groups', 'suppliers'));
     	}
     }
-    public function postProductCreate(ProductsRequest $request, $id=null)
+    public function postProductCreate(ProductsRequest $request, $id = null)
     {
     	
     	$logs = '';
 		$id = $request->id;
-		$rand_attr = 'P';
+		$rand_attr = 'P0';
 	    $name = $request->input('name');
 	    $group_id = $request->input('group_id');
-	    // $creator_id = $request->input('creator_id');
+	    $creator_id = Auth::user()->creator_id;
 	    $search_word = $request->input('search_word');
 	    $title = $request->input('title');
 	    $description = strip_tags($request->input('description'));
@@ -59,13 +65,12 @@ class ProductsController extends Controller
 	    $tags = $request->input('tags');
 	    $status = $request->input('status');
     	if (empty($id)) {
-    		DB::beginTransaction();
     		try {
-		        $product_id = DB::table('products')->insertGetId([
-		            'product_code' => $this->commonController->rand_code(5, $rand_attr),
+    			$data = [
+		            'product_code' => $this->commonController->rand_code(4, $rand_attr),
 		            'name' => $name,
 		            'group_id' => $group_id,
-		            // 'creator_id' => $creator_id,
+		            'creator_id' => $creator_id,
 		            'search_word' => $search_word,
 		            'title' => $title,
 		            'description' => $description,
@@ -73,8 +78,11 @@ class ProductsController extends Controller
 		            'brand' => $brand,
 		            'supplier_id' => $supplier_id,
 		            'tags' => $tags,
-		            'status' => $status
-			    ]);
+		            'status' => $status,
+		            'created_at' => Carbon::now(),
+		            'updated_at' => Carbon::now()
+			    ];
+		        $product_id = $this->productRepository->insertGetId($data);
 		        if (!empty($request->get('images'))) {
 			        $add_images = $request->get('images');
 			        foreach ($add_images as $key => $add_image) {
@@ -91,26 +99,21 @@ class ProductsController extends Controller
 			        }
 		        }
 
-			    DB::commit();
     			$logs = 'Insert Product';
 			    $logs_status = 1;
 			} catch (Exception $e) {
 				$logs = 'Insert Product'.$e->getMessage();
 				$logs_status = 0;
-				DB::rollBack();
 			}
     		$this->commonController->writeLogs($logs, $logs_status);
 
 	        return redirect()->route('product-list');
     	}else{
-    		DB::beginTransaction();
     		try {
-        		// $product_code = $request->get('product_code');
-			    DB::table('products')->update([
-		            // 'product_code' => $product_code,
+    			$data = [
 		            'name' => $name,
 		            'group_id' => $group_id,
-		            // 'creator_id' => $creator_id,
+		            'creator_id' => $creator_id,
 		            'search_word' => $search_word,
 		            'title' => $title,
 		            'description' => $description,
@@ -118,8 +121,10 @@ class ProductsController extends Controller
 		            'brand' => $brand,
 		            'supplier_id' => $supplier_id,
 		            'tags' => $tags,
-		            'status' => $status
-			    ]);
+		            'status' => $status,
+		            'updated_at' => Carbon::now()
+			    ];
+    			$this->productRepository->update($id , $data);
 			    if (!empty($request->get('images'))) {
 				    $add_images = $request->get('images');
 				    if ($add_images) {
@@ -143,13 +148,11 @@ class ProductsController extends Controller
 			    		DB::table('product_images')->where('id', $value)->where('product_id', $id)->delete();
 			    	}
 			    }
-			    DB::commit();
     			$logs = 'Update Product';
 			    $logs_status = 1;
 			}catch (Exception $e) {
 				$logs = 'Update Product'.$e->getMessage();
 				$logs_status = 0;
-				DB::rollBack();
 			}
     		$this->commonController->writeLogs($logs, $logs_status);
 
@@ -158,21 +161,19 @@ class ProductsController extends Controller
     }
     public function productDelete($id)
     {
-    	DB::beginTransaction();
-    		try {
-			    DB::table('users')->where('id', $id)->update([
-		            'deleted_at' => Carbon::now()
-			    ]);
-			    DB::commit();
-    			$logs = 'Delete User';
-			    $logs_status = 1;
-			}catch (Exception $e) {
-				$logs = 'Delete User'.$e->getMessage();
-				$logs_status = 0;
-				DB::rollBack();
-			}
-    		$this->commonController->writeLogs($logs, $logs_status);
-    		
-		    return redirect()->back();
+		try {
+			$data = [
+	            'deleted_at' => Carbon::now()
+		    ];
+		    $this->productRepository->update($id, $data);
+			$logs = 'Delete Product';
+		    $logs_status = 1;
+		}catch (Exception $e) {
+			$logs = 'Delete Product'.$e->getMessage();
+			$logs_status = 0;
+		}
+		$this->commonController->writeLogs($logs, $logs_status);
+		
+	    return redirect()->back();
     }
 }

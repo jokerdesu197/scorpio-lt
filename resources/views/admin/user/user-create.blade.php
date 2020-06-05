@@ -136,7 +136,7 @@
                                     <p style="color: red"> {{$errors->first('address')}}</p>
                                 @endif
                             </div>
-                            <div class="item form-group">
+                            {{--<div class="item form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Password<span>*</span></label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <input type="password" name="password" class="form-control col-md-7 col-xs-12" placeholder="Nhập password...">
@@ -153,16 +153,16 @@
                                 @if($errors->has('password_confirmation'))
                                     <p style="color: red"> {{$errors->first('password_confirmation')}}</p>
                                 @endif
-                            </div>
+                            </div> --}}
                             <div class="item form-group" >
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Roles</label>
                                 <!-- <input class="form-control" name="roles" placeholder="Nhập roles..." /> -->
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <select name="role_id" class="form-control col-md-7 col-xs-12">
                                         <option value="">-- Chọn role --</option>
-                                        <option value="1">Admin</option>
-                                        <option value="2">Mod</option>
-                                        <option value="3">Member</option>
+                                        @foreach($roles as $role)
+                                        <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                        @endforeach
                                      </select>
                                 </div>
                                 @if($errors->has('role_id'))

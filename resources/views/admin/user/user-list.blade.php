@@ -64,12 +64,12 @@
 			                          	@foreach($users as $user)
 			                          	<tr class='my-row'>
 			                           		<td><?=$i++?></td>
-			                           		<td>{{$user->name}}</td>
+			                           		<td>{{$user->user_name}}</td>
 			                           		<td>{{$user->login_id}}</td>
 			                           		<td>{{$user->tel_num}}</td>
 			                           		<td>{{$user->email}}</td>
-			                           		<td>{{$user->role_id}}</td>
-			                           		<td>{{$user->status}}</td>
+			                           		<td>{{$user->role_name}}</td>
+			                           		<td>{{ $user->status == "1" ? 'Active' : 'Un-Active' }}</td>
 			                           		<td>
 			                             		<a href="{{route('user-update',$user->id )}}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Update </a>
 			                             		<a href="{{route('user-delete', $user->id )}}" id="" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a>
