@@ -22,7 +22,7 @@ class Suppliers extends Migration
             $table->string('tel_num', 18)->nullable();
             $table->boolean('status', 18)->default(0);
             $table->datetime('deleted_at')->nullable();
-            $table->timestamps();
+            $table->timestamps()->default('CURRENT_TIMESTAMP');
         });
     }
 

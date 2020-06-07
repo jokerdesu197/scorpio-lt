@@ -16,13 +16,13 @@ class Carts extends Migration
         Schema::create('carts', function (Blueprint $table) {
             $table->increments('id');
             $table->string('product_code', 10)->nullable();
-            $table->integer('product_id')->unsigned();
-            $table->foreign('product_id')->references('id')->on('products')->nullable();
-            $table->integer('customer_id')->unsigned();
-            $table->foreign('customer_id')->references('id')->on('customers')->nullable();
+            $table->integer('product_id')->unsigned()->nullable();
+            $table->foreign('product_id')->references('id')->on('products');
+            $table->integer('customer_id')->unsigned()->nullable();
+            $table->foreign('customer_id')->references('id')->on('customers');
             $table->integer('quantity')->nullable();
             $table->boolean('is_item_cancel')->default(1);
-            $table->timestamps();
+            $table->timestamps()->default('CURRENT_TIMESTAMP');
         });
     }
 
