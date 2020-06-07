@@ -1,4 +1,4 @@
-@extends('admin.index')
+@extends('admin.master')
 @section('content')
 <!-- Default Data -->
 <div class="right_col" role="main" >
@@ -42,7 +42,7 @@
 			                     	<td>{{$role->name}}</td>
 			                     	<td>{{$role->description}}</td>
 			                     	<td>
-			                       		<a href="{{ route('role-update', $role->id )}}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Update </a>
+			                       		<a href="{{ route('ACL-detail', $role->id )}}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Update </a>
 			                       		<a href="{{ route('role-delete', $role->id )}}" id="" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a>
 			                      	</td>
 			                    </tr>

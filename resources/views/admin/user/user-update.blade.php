@@ -1,11 +1,5 @@
 @extends('admin.index')
 @section('content')
-
-@if($update_status) 
-    <script type="text/javascript">
-        alert('Pls!! update info');
-    </script>
-@endif  
 <div class="right_col" role="main">
     <div class="">
         <div class="clearfix"></div>
@@ -13,7 +7,7 @@
             <div class="col-md-12 col-sm-12 ">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2>Form Create <small>create user</small></h2>
+                        <h2>Form Update <small>User</small></h2>
                         <ul class="nav navbar-right panel_toolbox">
                             <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                             </li>
@@ -35,7 +29,7 @@
                         <p class="text-muted font-13 m-b-30"></p>
                         <form class="form-horizontal form-label-left" method="post" action="{{ route('post-user-create', $user->id )}}" >
                             <input type="hidden" name="_token" value="{{csrf_token()}}"/>
-                            <span class="section" >Create User</span>
+                            <span class="section">Update User</span>
 
                             <div class="item form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Name<span>*</span></label>
@@ -194,4 +188,9 @@
         </div>
     </div>
 </div>
+@if($update_status) 
+    <script type="text/javascript">
+        alert('Pls!! update info');
+    </script>
+@endif
 @endsection

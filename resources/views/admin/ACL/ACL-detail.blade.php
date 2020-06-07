@@ -1,4 +1,4 @@
-@extends('admin.index')
+@extends('admin.master')
 @section('content')
 <div class="right_col">
     <div class="clearfix"></div>

@@ -54,28 +54,28 @@
                   </li>
                   <li><a><i class="fa fa-edit"></i>Access Control List<span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="{{ route('user-create')}}">Create User</a></li>
-                      <li><a href="{{ route('user-list') }}">List User</a></li>
+                      <li><a href="{{ route('user-create')}}">User Create</a></li>
+                      <li><a href="{{ route('user-list') }}">User List</a></li>
                       <hr>
-                      <li><a href="{{ route('role-create')}}">Create Role</a></li>
-                      <li><a href="{{ route('role-list')}}">List Role</a></li>
-                      <!-- <hr> -->
+                      <li><a href="{{ route('role-create')}}">Role Create</a></li>
+                      <li><a href="{{ route('role-list')}}">Role List</a></li>
+                      <hr>
                       <!-- <li><a href="form_upload.html">Permision New</a></li>
                       <li><a href="form_buttons.html">Permision List</a></li> -->
                       <!-- <hr> -->
                       <li><a href="{{ route('ACL-create')}}">ACL Create</a></li>
                     </ul>
                   </li>
-                  <li><a><i class="fa fa-desktop"></i> Products <span class="fa fa-chevron-down"></span></a>
+                  <li><a><i class="fa fa-desktop"></i>Products<span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="{{ route('product-create')}}">Create Product</a></li>
-                      <li><a href="{{ route('product-list')}}">List Product</a></li>
+                      <li><a href="{{ route('product-create')}}">Product Create</a></li>
+                      <li><a href="{{ route('product-list')}}">Product List</a></li>
                       <hr>
-                      <li><a href="{{ route('product-type-create')}}">Create Product Type</a></li>
-                      <li><a href="{{ route('product-type-list')}}">List Product Type</a></li>
+                      <li><a href="{{ route('product-type-create')}}">Product Type Create</a></li>
+                      <li><a href="{{ route('product-type-list')}}">Product Type List</a></li>
                       <hr>
-                      <li><a href="{{ route('product-gr-create')}}">Create Product Group</a></li>
-                      <li><a href="{{ route('product-gr-list')}}">List Product Group</a></li>
+                      <li><a href="{{ route('product-gr-create')}}">Product Group Create</a></li>
+                      <li><a href="{{ route('product-gr-list')}}">Product Group List</a></li>
                     </ul>
                   </li>
                   <li><a><i class="fa fa-table"></i> Tables <span class="fa fa-chevron-down"></span></a>

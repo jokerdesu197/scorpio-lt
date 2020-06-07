@@ -20,7 +20,7 @@ class RoleRepository extends EloquentRepository implements RoleRepositoryInterfa
     }
     public function getRole($id)
     {
-    	$qb = $this->_model::where('id', $id)->first();
+    	$qb = $this->_model::where('id', $id)->whereNull('deleted_at')->first();
     	return $qb;
     }
     public function getListRole()

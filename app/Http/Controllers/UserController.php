@@ -36,11 +36,11 @@ class UserController extends Controller
 
     public function userCreate(Request $request, $id=null)
     {
-	    if ($id) {
+	    if ($id || Auth::user()->id == 0) {
 	    	$user = Auth::user();
     		if (Gate::allows('user-update', null) || $user->id == $id) {
     			$update_status = $request->update_status;
-	    		$user = $this->userRepository->findOrFail($id);
+	    		$user = $this->userRepository->find($id);
 	    		$roles = DB::table('roles')->where('deleted_at', null)->where('id', '>', 0)->get();
 	    		return view('admin.user.user-update', compact('user', 'roles', 'update_status'));
 		    }else{

@@ -38,8 +38,15 @@ class ACLController extends Controller
         if ($id) {
             if (Gate::allows('ACL-detail', null) || Auth::user()->role_id == $id) {
             	$role = $this->roleRepository->getRole($id);
+                if (!$role) {
+                    return view('response.404');
+                }
                 $perm_id = $role->permissionRole($id);
-                $perm_id = array_values(json_decode($perm_id->permission_id, true));
+                if($perm_id){
+                    $perm_id = array_values(json_decode($perm_id->permission_id, true));
+                }else{
+                    $perm_id = [];
+                }
                 $permissions = DB::table('permissions')->get()->groupBy('group');
               	return view('admin.ACL.ACL-detail', compact('permissions', 'role', 'perm_id'));
             }else{
