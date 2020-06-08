@@ -48,7 +48,7 @@
                                             <tr>
                                                 <!-- quyền thứ 1 -->
                                                 <td class="table-light">
-                                                    <input id="permission-1" data="1" type="checkbox" class="i-checks check-permission-1" name="permission[]"  value="1" onclick="checkAllJquery('permission-1', 'check-permission-1');">
+                                                    <input id="permission-1" data="1" type="checkbox" class="i-checks check-permission-1" name="permission[]"  value="1" onclick="checkAll('permission-1', 'check-permission-1');">
                                                     <span class="m-l-xs">Access Control List </span>
                                                 </td>
                                                 <td class="table-active"></td>
@@ -65,7 +65,7 @@
                                             <tr>
                                                 <!-- quyền thứ 2 -->
                                                 <td class="table-light">
-                                                    <input id="permission-3" data="1" type="checkbox" class="i-checks check-permission-2" name="permission[]"  value="1" onclick="checkAllJquery('permission-3', 'check-permission-2');">
+                                                    <input id="permission-3" data="1" type="checkbox" class="i-checks check-permission-2" name="permission[]"  value="1" onclick="checkAll('permission-3', 'check-permission-2');">
                                                     <span class="m-l-xs">User Control</span>
                                                 </td>
                                                 <td class="table-active"></td>
@@ -82,7 +82,7 @@
                                             <tr>
                                                 <!-- quyền thứ 3 -->
                                                 <td class="table-light">
-                                                    <input id="permission-5" data="1" type="checkbox" class="i-checks check-permission-3" name="permission[]"  value="1" onclick="checkAllJquery('permission-5', 'check-permission-3');">
+                                                    <input id="permission-5" data="1" type="checkbox" class="i-checks check-permission-3" name="permission[]"  value="1" onclick="checkAll('permission-5', 'check-permission-3');">
                                                     <span class="m-l-xs">Role Control</span>
                                                 </td>
                                                 <td class="table-active"></td>
@@ -99,7 +99,7 @@
                                             <tr>
                                                 <!-- quyền thứ 4 -->
                                                 <td class="table-light">
-                                                    <input id="permission-7" data="1" type="checkbox" class="i-checks check-permission-4" name="permission[]"  value="1" onclick="checkAllJquery('permission-7', 'check-permission-4');">
+                                                    <input id="permission-7" data="1" type="checkbox" class="i-checks check-permission-4" name="permission[]"  value="1" onclick="checkAll('permission-7', 'check-permission-4');">
                                                     <span class="m-l-xs">Products Control</span>
                                                 </td>
                                                 <td class="table-active"></td>
@@ -144,7 +144,7 @@
             }
         });
     });
-    function checkAllJquery(baseId, itemClass) {
+    function checkAll(baseId, itemClass) {
         var baseCheck = $('#' + baseId).is(":checked");
         $('.' + itemClass).each(function() {
             if (!$(this).is(':disabled')) {

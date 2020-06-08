@@ -33,16 +33,16 @@ class ACLController extends Controller
     	return view('admin.role.role-list', compact('i', 'roles'));
     }
 
-    public function ACLCreate(Request $request, $id=null)
+    public function ACLCreate(Request $request, $id=NULL)
     {
         if ($id) {
-            if (Gate::allows('ACL-detail', null) || Auth::user()->role_id == $id) {
+            if (Gate::allows('ACL-detail', NULL) || Auth::user()->role_id == $id) {
             	$role = $this->roleRepository->getRole($id);
                 if (!$role) {
                     return view('response.404');
                 }
                 $perm_id = $role->permissionRole($id);
-                if($perm_id){
+                if(!empty($perm_id->permission_id)){
                     $perm_id = array_values(json_decode($perm_id->permission_id, true));
                 }else{
                     $perm_id = [];
@@ -53,8 +53,8 @@ class ACLController extends Controller
                 return redirect()->route('admin-login');
             }
         }else{
-            if (Gate::allows('ACL-create', null)) {
-                $roles = DB::table('roles')->where('deleted_at', null)->where('id', '>', 0)->get();
+            if (Gate::allows('ACL-create', NULL)) {
+                $roles = DB::table('roles')->where('deleted_at', NULL)->where('id', '>', 0)->get();
                 $permissions = DB::table('permissions')->get()->groupBy('group');
                 return view('admin.ACL.ACL', compact('permissions', 'roles'));
             }else{
@@ -63,13 +63,17 @@ class ACLController extends Controller
         }
     }
 
-    public function postACLCreate(ACLRequest $request, $id = null)
+    public function postACLCreate(ACLRequest $request, $id = NULL)
     {
         $arr = $request->input('permission_id');
         $description = $request->input('description');
         $name = $request->input('name');
         if ($id) {
-            $perm_id = json_encode($arr, JSON_FORCE_OBJECT);
+            if (empty($arr)) {
+                $perm_id = NULL;
+            }else{
+                $perm_id = json_encode($arr, JSON_FORCE_OBJECT);
+            }
             $data_1 = [
               'name' => $name,
               'description' => $description,
@@ -79,13 +83,15 @@ class ACLController extends Controller
             try {
                 $data_2 = [
                     'role_id' => $id,
-                    'permission_id' => $perm_id
+                    'permission_id' => $perm_id,
+                    'updated_at' => Carbon::now()
                 ];
                 $this->roleRepository->update($id, $data_1);
                 $check_role = DB::table('permission_role')->where('role_id', $id)->count();
                 if ($check_role) {
                     DB::table('permission_role')->where('role_id', $id)->update($data_2);
                 }else{
+                    $data_2 = array_merge(['created_at' => Carbon::now()], $data_2);
                     DB::table('permission_role')->insert($data_2);
                 }
                 DB::commit();
@@ -136,7 +142,7 @@ class ACLController extends Controller
         $roles = $this->roleRepository->getListRole()->paginate(15);
         return view('admin.role.role-list', compact('i', 'roles'));
     }
-    public function roleCreate($id=null)
+    public function roleCreate($id=NULL)
     {
         if ($id) {
             $role = $this->roleRepository->getRole($id);
@@ -145,7 +151,7 @@ class ACLController extends Controller
             return view('admin.role.role-create');
         }
     }
-    public function postRoleCreate(Request $request, $id=null)
+    public function postRoleCreate(Request $request, $id=NULL)
     {
         $request->validate([
             'name'=>'required|max:50',
