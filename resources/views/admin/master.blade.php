@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- <meta name="csrf-token" content="{{ csrf_token() }}"> -->
-	<link rel="icon" href="{{ asset('images/favicon.ico')}}" type="image/ico" />
+	  <link rel="icon" href="{{ asset('images/favicon.ico')}}" type="image/ico" />
 
     <title>Scorpio Pharmacy</title>
   @include('admin.common-css')
@@ -76,6 +76,12 @@
                       <hr>
                       <li><a href="{{ route('product-gr-create')}}">Product Group Create</a></li>
                       <li><a href="{{ route('product-gr-list')}}">Product Group List</a></li>
+                    </ul>
+                  </li>
+                  <li><a><i class="fa fa-desktop"></i>News<span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="{{ route('news-create')}}">New Create</a></li>
+                      <li><a href="{{ route('product-list')}}">New List</a></li>
                     </ul>
                   </li>
                   <li><a><i class="fa fa-table"></i> Tables <span class="fa fa-chevron-down"></span></a>

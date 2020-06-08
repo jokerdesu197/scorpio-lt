@@ -78,6 +78,11 @@ Route::group(['prefix'=> 'admin'], function(){
 		Route::post('/p-product/{id?}','ProductController@postProductCreate')->name('post-product-create');
 		Route::get('/product-delete/{id}','ProductController@productDelete')->name('product-delete');
 	});
+	// News
+	Route::group(['prefix' => 'news'], function(){
+		Route::get('/', 'NewsController@ACLCreate')->name('news-list');
+		Route::get('/news-create', 'NewsController@newsCreate')->name('news-create');
+		Route::post('/p-news-create/{id?}', 'NewsController@postNewsCreate')->name('post-news-create');
+	});
 });
 Route::post('/add-image', 'CommonController@addImage')->name('add-image');
->>>>>>> 26925ff1504ba6cd2c252dad8ff991119990e271
