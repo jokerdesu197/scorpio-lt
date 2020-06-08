@@ -80,9 +80,11 @@ Route::group(['prefix'=> 'admin'], function(){
 	});
 	// News
 	Route::group(['prefix' => 'news'], function(){
-		Route::get('/', 'NewsController@ACLCreate')->name('news-list');
+		Route::get('/', 'NewsController@newsList')->name('news-list');
 		Route::get('/news-create', 'NewsController@newsCreate')->name('news-create');
+		Route::get('/news-edit/{id}','NewsController@newsCreate')->name('news-update');
 		Route::post('/p-news-create/{id?}', 'NewsController@postNewsCreate')->name('post-news-create');
+		Route::get('/news-delete/{id}','NewsController@newsDelete')->name('news-delete');
 	});
 });
 Route::post('/add-image', 'CommonController@addImage')->name('add-image');

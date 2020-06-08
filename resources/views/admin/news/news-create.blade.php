@@ -1,5 +1,64 @@
 @extends('admin.master')
 @section('content')
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        var count_add = 0;
+        var sort_no = 1;
+        
+        //  fileupload
+        $('#upload_file').fileupload({
+            url: "{{ route('add-image') }}",
+            type: "post",
+            dataType: 'json',
+            sequentialUploads: true,
+            dropZone: $('.thumbnail'),
+            done: function(e, data) {
+                $('.progress').hide();
+                $.each(data.result.files, function(index, file) {
+                    var path = '{{ asset('temp_images') }}/' + file;
+                    var images = '<div id="group-temp-image-'+index+'"><div class="image view view-first col-md-3" style="height: auto;"><img class="bg-image" src="'+path+'" alt="image"><div class="mask ml-1"><div class="tools tools-bottom" style="margin-top: 45%;"><a href="'+path+'"><i class="fa fa-link"></i></a><!-- <a href="#"><i class="fa fa-pencil"></i></a>--><a id="delete-group-'+index+'" onClick="deleteImage('+index+')" style="cursor: pointer;" name="delete_images[]" image-data=""><i class="fa fa-times"></i></a></div></div></div></div>';
+                    var img = $('.thumbnail').append(images);
+                    var img_val = $('.thumbnail').append('<input type="hidden" name="images[]"  value="'+file+'|'+sort_no+'">');
+                    sort_no++;
+                    count_add++;
+                });
+            },
+            fail: function(e, data) {
+                alert("Fail");
+            },
+            always: function(e, data) {
+                $('.progress').hide();
+                $('.progress .progress-bar').width('0%');
+            },
+            start: function(e, data) {
+                $('.progress').show();
+            },
+            acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+            maxFileSize: 10000000,
+            maxNumberOfFiles: 4,
+            progressall: function(e, data) {
+                var progress = parseInt(data.loaded / data.total * 100, 10);
+                $('.progress .progress-bar').css(
+                    'width',
+                    progress + '%'
+                );
+            },
+            processalways: function(e, data) {
+                if (data.files.error) {
+                    alert("");
+                }
+            }
+        });
+        $('#upload_image').click(function() {
+            $('#upload_file').click();
+        });
+    });
+    // delete image
+    function deleteImage($obj) {
+        $('#group-temp-image-'+$obj).remove();
+    }
+</script>
 <div class="right_col" role="main">
     <div class="">
         <div class="page-title">
@@ -66,9 +125,22 @@
                                 @endif
                             </div>
                             <div class="item form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Image<span class="required"></span></label>
+                                <div class="col-md-6 col-sm-6">
+                                    <div class="progress" style="display: none;">
+                                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                    <div class="thumbnail" style="height: auto;">
+                                        
+                                    </div> 
+                                    <a id="upload_image" class="btn btn-primary mt-2" style="color: #FFF">Upload image</a>
+                                    <input id="upload_file" class="form-control" type="file" name="image_upload[]" style="display: none;">
+                                </div>
+                            </div>
+                            <div class="item form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">News date<span>*</span></label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="number" name="news_date" class="form-control col-md-7 col-xs-12" value="{{ old('news_date') }}">
+                                    <input type="date" name="news_date" class="form-control col-md-7 col-xs-12" value="{{ old('news_date') }}">
                                 </div>
                                 @if($errors->has('news_date'))
                                     <p style="color: red"> {{$errors->first('news_date')}}</p>
@@ -106,9 +178,10 @@
                                 <!-- <input class="form-control" name="status" placeholder="Nhập status..." /> -->
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <select name="news_type" class="form-control col-md-7 col-xs-12">
-                                        <option value="">-- Chọn type --</option>
-                                        <option value="1">Kích hoạt</option>
-                                        <option value="0">Chưa kích hoạt</option>
+                                        <option value="">-- Choose type --</option>
+                                        <option value="Flash News">Flash News</option>
+                                        <option value="Domestic News">Domestic News</option>
+                                        <option value="International News">International News</option>
                                     </select>
                                 </div>
                                 @if($errors->has('news_type'))
@@ -138,9 +211,9 @@
                                 <!-- <input class="form-control" name="status" placeholder="Nhập status..." /> -->
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <select name="status" class="form-control col-md-7 col-xs-12">
-                                        <option value="">-- Chọn status --</option>
-                                        <option value="1">Kích hoạt</option>
-                                        <option value="0">Chưa kích hoạt</option>
+                                        <option value="">-- Choose status --</option>
+                                        <option value="1">Active</option>
+                                        <option value="0">Un-Active</option>
                                     </select>
                                 </div>
                                 @if($errors->has('status'))

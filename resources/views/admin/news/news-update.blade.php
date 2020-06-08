@@ -70,7 +70,7 @@
             <div class="col-md-12 col-sm-12 ">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2>Form Edit <small>Edit Product</small></h2>
+                        <h2>Form Update |<small>News</small></h2>
                         <ul class="nav navbar-right panel_toolbox">
                             <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                             </li>
@@ -89,32 +89,38 @@
                         <div class="clearfix"></div>
                     </div>
                     <div class="x_content">
-                        <br />
-                        <form id="demo-form2" class="form-horizontal form-label-left" action="{{ route('post-product-create', $product->id)}}" method="post">
+                        <p class="text-muted font-13 m-b-30"></p>
+                        <form class="form-horizontal form-label-left" method="post" action="{{ route('post-news-create', $news->id)}}" >
                             <input type="hidden" name="_token" value="{{csrf_token()}}"/>
+                            <span class="section">Update News</span>
+
                             <div class="item form-group">
-                                <label class="col-form-label col-md-3 col-sm-3 label-align">Product code <span class="required">*</span>
-                                </label>
-                                <div class="col-md-6 col-sm-6 ">
-                                    <input type="text" name="product_code" class="form-control" value="{{ $product->product_code }}">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Name<span>*</span></label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input type="text" name="name" class="form-control col-md-7 col-xs-12" value="{{ $news->name }}">
                                 </div>
+                                @if($errors->has('name'))
+                                    <p style="color: red"> {{$errors->first('name')}}</p>
+                                @endif
                             </div>
                             <div class="item form-group">
-                                <label class="col-form-label col-md-3 col-sm-3 label-align">Product Name <span class="required">*</span>
-                                </label>
-                                <div class="col-md-6 col-sm-6 ">
-                                    <input type="text" name="name" class="form-control" value="{{ $product->name }}">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Title<span>*</span></label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input type="text" name="title" class="form-control col-md-7 col-xs-12" value="{{ $news->title }}">
                                 </div>
+                                @if($errors->has('title'))
+                                    <p style="color: red"> {{$errors->first('title')}}</p>
+                                @endif
                             </div>
                             <div class="item form-group">
-                                <label class="col-form-label col-md-3 col-sm-3 label-align">Image<span class="required"></span></label>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Image<span class="required"></span></label>
                                 <div class="col-md-6 col-sm-6">
                                     <div class="progress" style="display: none;">
                                         <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                     <div class="thumbnail" style="height: auto;">
-                                        @if(count($product_images) > 0)
-                                            @foreach($product_images as $image)
+                                        @if(count($news_images) > 0)
+                                            @foreach($news_images as $image)
                                                 <div id="group-temp-image-{{ $image->id }}">
                                                     <div class="image view view-first col-md-3" style="height: auto;">
                                                         <img class="bg-image" src="{{ asset($image->path) }}/{{$image->file_name}}" alt="image">
@@ -134,93 +140,95 @@
                                 </div>
                             </div>
                             <div class="item form-group">
-                                <label class="col-form-label col-md-3 col-sm-3 label-align">Product Group <span class="required">*</span>
-                                </label>
-                                <div class="col-md-6 col-sm-6 ">
-                                    <select name="group_id" class="form-control">
-                                        <option value="">-- Choose group --</option>
-                                        @foreach ($product_groups as $group)
-                                            <option value="{{ $group->id}}" {{ $product->group_id == $group->id ? 'selected' : null }}>{{ $group->name}}</option>
-                                        @endforeach
-                                     </select>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">News date<span>*</span></label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input type="date" name="news_date" class="form-control col-md-7 col-xs-12" value="{{ date('Y-m-d', strtotime($news->news_date)) }}">
                                 </div>
+                                @if($errors->has('news_date'))
+                                    <p style="color: red"> {{$errors->first('news_date')}}</p>
+                                @endif
                             </div>
                             <div class="item form-group">
-                                <label for="middle-name" class="col-form-label col-md-3 col-sm-3 label-align">Search word<span class="required"></span></label>
-                                <div class="col-md-6 col-sm-6 ">
-                                    <input class="form-control" type="text" name="search_word" value="{{ $product->search_word }}">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Search word<span>*</span></label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input type="text" name="search_word" class="form-control col-md-7 col-xs-12" value="{{ $news->search_word }}">
                                 </div>
+                                @if($errors->has('search_word'))
+                                    <p style="color: red"> {{$errors->first('search_word')}}</p>
+                                @endif
                             </div>
                             <div class="item form-group">
-                                <label class="col-form-label col-md-3 col-sm-3 label-align">Title<span class="required">*</span></label>
-                                <div class="col-md-6 col-sm-6 ">
-                                    <input class="form-control" type="text" name="title" value="{{ $product->title }}">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">News url<span></span></label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input type="text" name="news_url" class="form-control col-md-7 col-xs-12" value="{{ $news->news_url }}">
                                 </div>
+                                @if($errors->has('news_url'))
+                                    <p style="color: red"> {{$errors->first('news_url')}}</p>
+                                @endif
                             </div>
                             <div class="item form-group">
-                                <label class="col-form-label col-md-3 col-sm-3 label-align">Description <span class="required">*</span>
-                                </label>
-                                <div class="col-md-6 col-sm-6 ">
-                                    <textarea class="form-control" name="description">{{ $product->description }}</textarea>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">description<span>*</span></label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <textarea name="description" class="form-control col-md-7 col-xs-12">{{ $news->description }}</textarea>
                                 </div>
-                            </div>
-                            <!-- <div class="item form-group">
-                                <label class="col-form-label col-md-3 col-sm-3 label-align">Unit <span class="required">*</span>
-                                </label>
-                                <div class="col-md-6 col-sm-6 ">
-                                    <select name="unit" class="form-control">
-                                        <option value="">-- Choose unit --</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                     </select>
-                                </div>
-                            </div> -->
-                            <div class="item form-group">
-                                <label class="col-form-label col-md-3 col-sm-3 label-align">Brand <span class="required">*</span>
-                                </label>
-                                <div class="col-md-6 col-sm-6 ">
-                                    <input class="form-control" type="text" name="brand" value="{{ $product->brand }}">
-                                </div>
+                                @if($errors->has('description'))
+                                    <p style="color: red"> {{$errors->first('description')}}</p>
+                                @endif
                             </div>
                             <div class="item form-group">
-                                <label class="col-form-label col-md-3 col-sm-3 label-align">Supplier <span class="required">*</span>
-                                </label>
-                                <div class="col-md-6 col-sm-6 ">
-                                    <select name="supplier_id" class="form-control">
-                                        <option value="">-- Choose supplier --</option>
-                                        @foreach($suppliers as $supplier)
-                                        <option value="{{ $supplier->id }}" {{ $product->supplier_id == $supplier->id ? 'selected' : null }}>{{ $supplier->supplier_name }}</option>
-                                        @endforeach
-                                     </select>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">News type</label>
+                                <!-- <input class="form-control" name="status" placeholder="Nhập status..." /> -->
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <select name="news_type" class="form-control col-md-7 col-xs-12">
+                                        <option value="">-- Choose type --</option>
+                                        <option value="Flash News" {{ $news->news_type == "Flash News" ? 'selected' : null }}>Flash News</option>
+                                        <option value="Domestic News" {{ $news->news_type == "Domestic News" ? 'selected' : null }}>Domestic News</option>
+                                        <option value="International News" {{ $news->news_type == "International News" ? 'selected' : null }}>International News</option>
+                                    </select>
                                 </div>
+                                @if($errors->has('news_type'))
+                                    <p style="color: red"> {{$errors->first('news_type')}}</p>
+                                @endif
                             </div>
                             <div class="item form-group">
-                                <label class="col-form-label col-md-3 col-sm-3 label-align">Tags <span class="required">*</span>
-                                </label>
-                                <div class="col-md-6 col-sm-6 ">
-                                    <input class="form-control" type="text" name="tags" value="{{ $product->tags }}">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Source<span>*</span></label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input type="text" name="source" class="form-control col-md-7 col-xs-12" value="{{ $news->source }}">
                                 </div>
+                                @if($errors->has('source'))
+                                    <p style="color: red"> {{$errors->first('source')}}</p>
+                                @endif
                             </div>
                             <div class="item form-group">
-                                <label class="col-form-label col-md-3 col-sm-3 label-align">Status <span class="required">*</span>
-                                </label>
-                                <div class="col-md-6 col-sm-6 ">
-                                    <select name="status" class="form-control">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Tags<span>*</span></label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input type="text" name="tags" class="form-control col-md-7 col-xs-12" value="{{ $news->tags }}">
+                                </div>
+                                @if($errors->has('tags'))
+                                    <p style="color: red"> {{$errors->first('tags')}}</p>
+                                @endif
+                            </div>
+                            <div class="item form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Status</label>
+                                <!-- <input class="form-control" name="status" placeholder="Nhập status..." /> -->
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <select name="status" class="form-control col-md-7 col-xs-12">
                                         <option value="">-- Choose status --</option>
-                                        <option value="0" {{ $product->status == "0" ? 'selected' : null }}>Un-active</option>
-                                        <option value="1" {{ $product->status == "1" ? 'selected' : null }}>Active</option>
-                                     </select>
+                                        <option value="1" {{ $news->status == "1" ? 'selected' : null }}>Active</option>
+                                        <option value="0" {{ $news->status == "0" ? 'selected' : null }}>Un-Active</option>
+                                    </select>
                                 </div>
+                                @if($errors->has('status'))
+                                    <p style="color: red"> {{$errors->first('status')}}</p>
+                                @endif
                             </div>
                             <div class="ln_solid"></div>
-                            <div class="item form-group">
-                                <div class="col-md-6 col-sm-6 offset-md-3">
-                                    <button class="btn btn-primary" type="button">Cancel</button>
-                                    <button type="submit" class="btn btn-success">Submit</button>
+                            <div class="form-group">
+                                <div class="col-md-6 col-md-offset-3">
+                                    <a class="btn btn-primary" href="{{route('news-list')}}">Cancel</a>
+                                    <button name="send" type="submit" class="btn btn-success">Submit</button>
                                 </div>
                             </div>
-
                         </form>
                     </div>
                 </div>
