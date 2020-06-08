@@ -33,7 +33,11 @@ class UserRepository extends EloquentRepository implements UserRepositoryInterfa
         $perm = Permission::where('name', strtolower($permission))->first();
         if ($perm) {
             $role = PermissionRole::where('role_id', $role_id)->first();
-            $permission_role = array_values(json_decode($role->permission_id, true));
+            if (!empty($role->permission_id)) {
+                $permission_role = array_values(json_decode($role->permission_id, true));
+            }else{
+                $permission_role = [];
+            }
             return in_array($perm->id, $permission_role);
         }
         else {
