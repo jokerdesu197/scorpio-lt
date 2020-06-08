@@ -38,7 +38,6 @@ class LoginController extends Controller
 	  	if ($validator->fails()) {
 	  		return redirect()->back()->withErrors($validator)->withInput();
 	  	} else {
-
 	  		if ($login_id) {
 				$checkin = [
 	                'login_id' => $login_id,

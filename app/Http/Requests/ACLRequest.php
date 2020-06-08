@@ -24,8 +24,7 @@ class ACLRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'description' => 'required|max:18',
-            'permission_id' => 'required',
+            'description' => 'required|max:18'
         ];
         return $rules;
     }

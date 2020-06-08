@@ -82,7 +82,12 @@ class ACLController extends Controller
                     'permission_id' => $perm_id
                 ];
                 $this->roleRepository->update($id, $data_1);
-                DB::table('permission_role')->where('role_id', $id)->update($data_2);
+                $check_role = DB::table('permission_role')->where('role_id', $id)->count();
+                if ($check_role) {
+                    DB::table('permission_role')->where('role_id', $id)->update($data_2);
+                }else{
+                    DB::table('permission_role')->insert($data_2);
+                }
                 DB::commit();
                 $logs = 'Update ACL';
                 $logs_status = 1;

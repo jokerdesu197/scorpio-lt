@@ -30,7 +30,7 @@
                         <div class="form-group">
                             <label class="control-label col-sm-2">Role name</label>
                             <div class="col-sm-9 pb-2">
-                                <input class="form-control role-no" type="text" name="name" value="{{ $role->description}}">
+                                <input class="form-control role-no" type="text" name="name" value="{{ $role->name}}">
                             </div>
                         </div>
                         <div class="form-group">
